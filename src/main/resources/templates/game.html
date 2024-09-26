@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Jeu de Nim</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Écarte les conteneurs */
+            width: 100%; /* Prend toute la largeur */
+            max-width: 800px; /* Largeur maximale */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.5em;
+        }
+    </style>
+    <script>
+        function submitForm(value) {
+            document.getElementById('matches').value = value;
+            document.getElementById('playForm').submit();
+        }
+    </script>
+</head>
+<body>
+<h1>Jeu de Nim</h1>
+<p>Nombre d'allumettes restantes: <span th:text="${totalMatches}"></span></p>
+<p>Le joueur courant est: <span th:text="${currentPlayer == 'left' ? 'Joueur Gauche' : 'Joueur Droit'}"></span></p>
+
+<div th:if="${error}">
+    <p style="color: red;" th:text="${error}"></p>
+</div>
+<div th:if="${message}">
+    <p style="color: green;" th:text="${message}"></p>
+</div>
+
+<!-- Condition pour afficher le bouton "Tirer au sort" seulement si le jeu n'est pas encore commencé -->
+<div th:if="${roundNumber == 0}">
+    <form action="/flipCoin" method="get">
+        <button type="submit">Tirer au sort</button>
+    </form>
+</div>
+
+
+<div class="button-container">
+    <div class="left-buttons">
+        <h2>Joueur Gauche</h2>
+        <button th:each="i : ${matchOptions}" type="button" th:text="${i}"
+                th:onclick="'submitForm(' + ${i} + ');'"
+                th:disabled="${currentPlayer == 'right'}">
+        </button>
+    </div>
+    <div class="right-buttons">
+        <h2>Joueur Droit</h2>
+        <button th:each="i : ${matchOptions}" type="button" th:text="${i}"
+                th:onclick="'submitForm(' + ${i} + ');'"
+                th:disabled="${currentPlayer == 'left'}">
+        </button>
+    </div>
+</div>
+
+<form id="playForm" action="/play" method="post" style="display: none;">
+    <input type="hidden" id="matches" name="matches" value="">
+</form>
+
+</body>
+</html>

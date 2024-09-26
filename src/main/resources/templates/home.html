@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Démarrer le Jeu de Nim</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Démarrer le Jeu de Nim</h1>
+<form action="/start" method="post">
+    <label for="totalMatches">Nombre d'allumettes:</label>
+    <input type="number" id="totalMatches" name="totalMatches" required>
+
+    <label for="numberOfPlayers">Nombre de joueurs:</label>
+    <input type="number" id="numberOfPlayers" name="numberOfPlayers" required>
+
+    <button type="submit">Commencer le Jeu</button>
+</form>
+</body>
+</html>
